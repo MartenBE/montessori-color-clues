@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<!-- Created by Martijn Saelens -->
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Montessori Color clues</title>
+    <style>
+        @font-face {
+            font-family: 'Sylvia';
+            src: url('./sylvia.ttf') format('truetype');
+        }
+
+        body {
+            text-align: center;
+            margin: 2rem;
+        }
+
+        #output {
+            margin: 1rem;
+            padding: 6rem;
+            overflow-wrap: break-word;
+            word-break: break-word;
+            border: 1px solid black;
+            border-radius: 1rem;
+            min-height: 2em;
+        }
+
+        #output span {
+            font-family: 'Sylvia', Arial, sans-serif;
+        }
+        .vowel {
+            color: blue;
+        }
+        .consonant {
+            color: HotPink;
+        }
+
+        #wordInput {
+            width: 30vw;
+            height: 3em;
+        }
+
+        #fontSizeSlider {
+            width: 30vw;
+        }
+    </style>
+</head>
+<body>
+    <h1>Montessori Color clues</h1>
+    <p>Enter a word:</p>
+    <textarea id="wordInput" placeholder="Type a word here" oninput="highlightWord()"></textarea>
+    <p>Font size:</p>
+    <input type="range" id="fontSizeSlider" min="10" max="1000" value="150" oninput="updateFontSize()">
+    <div id="output"></div>
+
+    <script>
+        function highlightWord() {
+            const vowels = ['a', 'e', 'i', 'o', 'u', 'A', 'E', 'I', 'O', 'U'];
+            const input = document.getElementById('wordInput').value;
+            const output = document.getElementById('output');
+            output.innerHTML = '';
+
+            for (let letter of input) {
+                let span = document.createElement('span');
+                span.textContent = letter;
+                if (vowels.includes(letter)) {
+                    span.classList.add('vowel');
+                } else {
+                    span.classList.add('consonant');
+                }
+                output.appendChild(span);
+            }
+        }
+
+        function updateFontSize() {
+            const fontSize = document.getElementById('fontSizeSlider').value;
+            const output = document.getElementById('output');
+            output.style.fontSize = fontSize + 'px';
+        }
+
+        updateFontSize(); // Initialization hack so the font size is already synced once on page load.
+    </script>
+
+</body>
+</html>
